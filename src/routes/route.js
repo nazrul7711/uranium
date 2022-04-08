@@ -51,6 +51,15 @@ router.get('/get/films', function(req, res) {
     res.send('dummy response')
 })
 
+router.get('/get/films/:filmId', function(req, res) {
+    if(req.params.filmId>films.length-1){
+        res.send('not found')
+    }else{
+    res.send(films[req.params.filmId])
+    }
+    res.send('dummy response')
+})
+
 
 
 
