@@ -1,66 +1,52 @@
 const express = require('express');
-const logger = require('./logger')
 
 const router = express.Router();
 
-let movies =["karan arjun","heena","omkara","titanic","flight"]
-
-let films =[ {
-    "id": 1,
-    "name": "The Shining"
-   }, {
-    "id": 2,
-    "name": "Incendies"
-   }, {
-    "id": 3,
-    "name": "Rang de Basanti"
-   }, {
-    "id": 4,
-    "name": "Finding Nemo"
-   }]
-   
-
-router.get('/user-profile/:abcd', function(req, res) {
-    console.log(req)
-    console.log(req.params.abcd)
-    res.send('dummy response')
-})
-
-router.get('/test-me', function (req, res) {
-    console.log('------------------')
-    console.log('------------------')
-    console.log('These are the request query parameters: ', req.query)
-    res.send('My first ever api!')
-});
-
-router.get('/get/movies', function(req, res) {
-    res.send(movies)
-    res.send('dummy response')
-})
-
-router.get('/GET/movies/:id', function(req, res) {
-    if(req.params.id > movies.length-1){
-        res.send("sorry your requested movie is not in the list")
+let players =
+   [
+       {
+           "name": "manish",
+           "dob": "1/1/1995",
+           "gender": "male",
+           "city": "jalandhar",
+           "sports": [
+               "swimming"
+           ]
+       },
+       {
+           "name": "gopal",
+           "dob": "1/09/1995",
+           "gender": "male",
+           "city": "delhi",
+           "sports": [
+               "soccer"
+           ],
+       },
+       {
+           "name": "lokesh",
+           "dob": "1/1/1990",
+           "gender": "male",
+           "city": "mumbai",
+           "sports": [
+               "soccer"
+           ],
+       },
+   ]
+ 
+router.post('/players', function(req, res) {
+    let data =  req.body
+    function pushPlayers(sth){
+        for( let a of players){
+            if(a["name"] == sth["name"]){
+                return
+            }
+        }
+        players.push(sth)
     }
-    res.send(movies[req.params.id])
-    res.send('dummy response')
-})
-
-router.get('/get/films', function(req, res) {
-    res.send(films)
-    res.send('dummy response')
-})
-
-router.get('/get/films/:filmId', function(req, res) {
-    if(req.params.filmId>films.length-1){
-        res.send('not found')
-    }else{
-    res.send(films[req.params.filmId])
-    }
-    res.send('dummy response')
-})
-
-
+    pushPlayers(data)
+    
+    res.send({data:players,status:true})
+})   
 
 
 module.exports = router;
