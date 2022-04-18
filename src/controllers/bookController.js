@@ -1,6 +1,7 @@
 const { default: mongoose } = require("mongoose")
 const authorModel = require("../models/newAuthor")
 const bookModel= require("../models/newBook")
+const { findOneAndUpdate } = require("../models/newPublisher")
 const publisherModel = require("../models/newPublisher")
 
 const createBook= async function (req, res) {
@@ -34,5 +35,13 @@ const getBooksWithAuthorDetails = async function (req, res) {
 
 }
 
+const updateBooks = async function(req,res){
+    // let data = req.body
+    let modifiedData=await bookModel.findOneAndUpdate({name:"Train to Pakistan"},{isHardCover:true},{upsert:true})
+    let priceData = await bookModel.update({ratings:{$gt:3.5}},{$inc:{price:10}})
+    res.send("succeeded")
+}
+
 module.exports.createBook= createBook
 module.exports.getBooksWithAuthorDetails = getBooksWithAuthorDetails
+module.exports.updateBooks = updateBooks
