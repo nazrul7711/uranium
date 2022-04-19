@@ -7,7 +7,7 @@ const validator = require("../validator/formatter.js")
 const router = express.Router();
 
 router.get('/test-me', function (req, res) {   
-    console.log(lodash) 
+    
     logger.india()
     let months = ['january','february','march','april','may','june','july','august','september','october','november','december']
     console.log(lodash.chunk(months,[size=4]))
