@@ -1,19 +1,18 @@
+const { application } = require('express');
 const express = require('express');
 const router = express.Router();
 
-const authorController= require("../controllers/authorController")
-const bookController= require("../controllers/bookController")
-const publisherController= require("../controllers/publisherController")
 
 
-router.post("/createAuthor", authorController.createAuthor  )
-
-router.post("/createPublisher",publisherController.createPublisher) 
-
-router.post("/createBook", bookController.createBook  )
-
-router.get("/getBooksWithAuthorDetails", bookController.getBooksWithAuthorDetails)
-
-router.put("/updateBooks",bookController.updateBooks)
+router.get("/test-me",async function(req,res,next){
+  // console.log("hello brother")
+  res.send("hello function up")
+})
+router.get("/india",async function(req,res,next){
+  res.send("hello india")
+})
+router.get("/assam",async function(req,res,next){
+  res.send("hello assam")
+})
 
 module.exports = router;
