@@ -1,12 +1,18 @@
 
-
-const mid4= function ( req, res, next) {
-    console.log("Hi I am a middleware named Mid4")
-    //counter
+const headerValidate = function(req,res,next){
+    console.log("hello m header validator")
+    let appUser = req.headers['isfreeappuser']
+    if(appUser==undefined){
+        res.send("sorry buddy no app user details")
+    }else if(appUser=="true"){
+        console.log(req.body)
+    }
     next()
+
 }
 
-module.exports.mid1= mid1
-module.exports.mid2= mid2
-module.exports.mid3= mid3
-module.exports.mid4= mid4
+
+
+
+
+module.exports.headerValidate = headerValidate
