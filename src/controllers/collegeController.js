@@ -6,12 +6,15 @@ const isValid = function (value) {
     if (typeof value === "string" && value.trim().length === 0) return false
     return true
 }
+const isValidRequestBody = function (requestBody) {
+    return Object.keys(requestBody).length > 0;
+}
 
 const createCollege = async function (req, res) {
     try {
         let data = req.body
         console.log(Object.keys(data))
-        if (Object.keys(data).length = 0) {
+        if (Object.keys(data).length == 0) {
             res.status(400).send({ status: false, data: "Bad Request" })      // (400) = {the server cannot or will not process the request due to something that is perceived to be a client error}
         }
         else {
@@ -53,14 +56,23 @@ const createCollege = async function (req, res) {
 
 const getCollegeDetails = async function(req,res){
     try{
-    let data = req.query.collegeName
-    if(!isValid(data)){
-        return res.status(400).send({status : false, msg : "give the college name" })
+        // let body = req.query;
+
+        // if (!isValidRequestBody(body)) {
+        //     return res.status(400).send({
+        //         status: false,
+        //         message: "Query not found, Please provide a valid query",
+        //     });
+        // }
+    let collegeName = req.query.name
+    if(!collegeName)  return res.status(400).send({status : false, msg : "give the college name" })
+    if(!isValid(collegeName)){
+        return res.status(400).send({status : false, msg : "Give the valid college name, College name is not in the list" })
     }
-    let small = collegeName.toLowerCase()
-    let getCollege = await collegeModel.findOne({name: small, isDeleted : false})
+    // let small = collegeName.toLowerCase()                           // we have done this in mongoDB
+    let getCollege = await collegeModel.findOne({name: collegeName, isDeleted : false})
     if(! getCollege){
-        return res.status(400).send({status : false,})
+        return res.status(400).send({status : false, msg : "Not a valid college"})
     }
     let checkId = getCollege._id
     let name1 = getCollege.name
@@ -88,6 +100,8 @@ const getCollegeDetails = async function(req,res){
 
 
 }
+
+
 
 module.exports.createCollege = createCollege
 module.exports.getCollegeDetails = getCollegeDetails

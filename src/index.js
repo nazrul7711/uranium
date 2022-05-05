@@ -7,8 +7,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-mongoose.connect("mongodb+srv://disha123:hl6LMcJIED1eCZhr@cluster0.hrerz.mongodb.net/project2-testing", {
+mongoose.connect("mongodb+srv://aayush245:nfSIEYYn8MYUbXG4@aayush.6yvut.mongodb.net/group62Database?retryWrites=true&w=majority", {
     useNewUrlParser: true
 })
 .then( () => console.log("MongoDb is connected"))
@@ -20,7 +19,6 @@ mongoose.connect("mongodb+srv://disha123:hl6LMcJIED1eCZhr@cluster0.hrerz.mongodb
 //         next();
 //   }
 //   );
-
 app.use('/', route);
 
 

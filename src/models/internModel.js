@@ -32,7 +32,7 @@ const internSchema = new mongoose.Schema({
     // ^[0-9]{10}$
     // ^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$
     mobile: {
-        type: Number,
+        type: String,
         trim: true,
         unique: [true,"This number is already registered"],
         validate: {
