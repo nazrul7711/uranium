@@ -43,7 +43,7 @@ const createIntern = async function (req, res) {
                 return res.status(400).send({ status: false, msg: "Enter a valid email address" });
             }
 
-            let uniqueEmail = await internModel.findOne({ email: data.email });// check email value present in collection or not
+            let uniqueEmail = await internModel.findOne({ email: data.email });    // check email value present in collection or not
             if(uniqueEmail) return res.status(400).send({ status: false, msg: "Email already exist" });
 
             if (!isValid(mobile)) {
@@ -53,20 +53,23 @@ const createIntern = async function (req, res) {
                 })
             }
 
-            if (!/^[0-9]{10}$/.test(mobile)) {
+            if (!/^[2-9]\d{9}$/.test(mobile)) {
                 return res.status(400).send({ status: false, msg: "Enter a valid mobile number" })
             }
-            let uniqueMobile=await internModel.findOne({mobile:data.mobile});// check for the mobile no already exist or not 
+            
+            let uniqueMobile= await internModel.findOne({mobile:data.mobile});      // check for the mobile no already exist or not 
             if(uniqueMobile) return res.status(400).send({status:false, msg:"Mobile Number already exist"})
+
 
             if(!isValid(collegeName)){
                 return res.status(400).send({status : false, msg : "Invalid College in request body"})
             }
+
             const findCollege = await collegeModel.findOne({name :data.collegeName, isDeleted : false})
             if (!findCollege) {
                 return res.status(400).send({ msg: "College not found" })
-            }   else
-            {
+            }  
+             else{
                 
                 data.collegeId = findCollege._id
             

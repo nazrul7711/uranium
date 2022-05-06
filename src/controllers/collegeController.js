@@ -6,6 +6,15 @@ const isValid = function (value) {
     if (typeof value === "string" && value.trim().length === 0) return false
     return true
 }
+
+const isValid2 = function (value) {
+    const noNumber = /^[^0-9]+$/g
+    if (typeof value !== 'string') return false
+    if(noNumber.test(value) === false) return false
+    return true
+}
+
+
 const isValidRequestBody = function (requestBody) {
     return Object.keys(requestBody).length > 0;
 }
@@ -24,6 +33,13 @@ const createCollege = async function (req, res) {
                 return res.status(400).send({
                     status: false,
                     msg: "name is required"
+                })
+            }
+
+            if (!isValid2(name)) {
+                return res.status(400).send({
+                    status: false,
+                    msg: "name is not valid, it contains only alphabets"
                 })
             }
 
@@ -46,7 +62,7 @@ const createCollege = async function (req, res) {
             }
 
             let savedData = await collegeModel.create(data)
-            res.status(201).send({ status: true, data: savedData })
+            res.status(201).send({ status: true,msg:"college saved successfully", data: savedData })
         }
     }
 
@@ -97,15 +113,13 @@ const getCollegeDetails = async function (req, res) {
             return res.status(200).send({ status: true, data: Data });
         }
         else {
-            res.status(400).send({ status: false, msg: "Bad Request" })
+            res.status(400).send({ status: false, msg: "Already applied" })
         }
     }
     catch (err) {
         console.log(err)
         res.status(500).send({ status: false, msg: "error", err: err.message })
     }
-
-
 }
 
 module.exports.createCollege = createCollege
