@@ -72,8 +72,14 @@ const createIntern = async function (req, res) {
              else{
                 
                 data.collegeId = findCollege._id
-            
-                let savedData = await internModel.create(data)
+              
+            if (!isValidObjectId(findCollege._id)) {
+                return res.status(400).send({
+                    status: false,
+                    msg: "not a valid collegeId"
+                })
+            }
+                 let savedData = await internModel.create(data)
                 res.status(201).send({ status: true,msg: "Registered successfully for internship ", data: savedData })
             }
      
